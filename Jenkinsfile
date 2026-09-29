@@ -9,15 +9,15 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Docker Build') {
             steps {
-                echo 'Build stage started'
+                sh 'docker build -t jenkins-cicd-web:${BUILD_NUMBER} .'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Test stage started'
+                sh 'docker image inspect jenkins-cicd-web:${BUILD_NUMBER}'
             }
         }
     }
