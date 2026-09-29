@@ -1,2 +1,381 @@
-<h1>Jenkins CI/CD Pipeline - Auto Deploy</h1>
-<h2>Jenkins CI/CD Pipeline - Automatic Deployment v2</h2>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudOps | CI/CD Deployment</title>
+
+```
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fb;
+        color: #1f2937;
+        line-height: 1.6;
+    }
+
+    header {
+        background: #111827;
+        color: white;
+        padding: 18px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    nav a {
+        color: #d1d5db;
+        text-decoration: none;
+        margin-left: 25px;
+    }
+
+    nav a:hover {
+        color: white;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #1e3a8a, #2563eb);
+        color: white;
+        text-align: center;
+        padding: 90px 20px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 20px;
+        max-width: 700px;
+        margin: auto;
+        color: #dbeafe;
+    }
+
+    .button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 13px 28px;
+        background: white;
+        color: #1d4ed8;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .section {
+        padding: 70px 8%;
+        text-align: center;
+    }
+
+    .section h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+
+    .section-intro {
+        max-width: 700px;
+        margin: 0 auto 40px;
+        color: #6b7280;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        background: white;
+        padding: 30px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h3 {
+        margin-bottom: 10px;
+        color: #1d4ed8;
+    }
+
+    .card p {
+        color: #6b7280;
+    }
+
+    .pipeline {
+        background: #111827;
+        color: white;
+    }
+
+    .pipeline .section-intro {
+        color: #d1d5db;
+    }
+
+    .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .step {
+        padding: 25px 15px;
+        border: 1px solid #374151;
+        border-radius: 8px;
+    }
+
+    .step-number {
+        font-size: 28px;
+        font-weight: bold;
+        color: #60a5fa;
+    }
+
+    .architecture {
+        background: white;
+    }
+
+    .architecture-box {
+        max-width: 900px;
+        margin: 30px auto 0;
+        padding: 30px;
+        background: #f9fafb;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .architecture-box p {
+        font-size: 18px;
+        margin: 12px 0;
+    }
+
+    .status {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 8px 18px;
+        background: #dcfce7;
+        color: #166534;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    footer {
+        background: #030712;
+        color: #9ca3af;
+        text-align: center;
+        padding: 25px;
+    }
+
+    footer strong {
+        color: white;
+    }
+
+    @media (max-width: 600px) {
+        .hero h1 {
+            font-size: 34px;
+        }
+
+        nav {
+            display: none;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CloudOps</div>
+
+```
+<nav>
+    <a href="#about">About</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#architecture">Architecture</a>
+</nav>
+```
+
+</header>
+
+<section class="hero">
+    <h1>Cloud & DevOps CI/CD</h1>
+
+```
+<p>
+    Automated application deployment using GitHub, Jenkins,
+    Docker, Amazon ECR, Ansible and AWS EC2.
+</p>
+
+<a href="#pipeline" class="button">View Pipeline</a>
+```
+
+</section>
+
+<section class="section" id="about">
+
+```
+<h2>Technology Stack</h2>
+
+<p class="section-intro">
+    This application demonstrates an automated CI/CD workflow
+    from source code commit to deployment on multiple AWS servers.
+</p>
+
+<div class="cards">
+
+    <div class="card">
+        <h3>GitHub</h3>
+        <p>Source code management and version control.</p>
+    </div>
+
+    <div class="card">
+        <h3>Jenkins</h3>
+        <p>Automated CI/CD pipeline orchestration.</p>
+    </div>
+
+    <div class="card">
+        <h3>Docker</h3>
+        <p>Containerized application build and testing.</p>
+    </div>
+
+    <div class="card">
+        <h3>Amazon ECR</h3>
+        <p>Secure storage for Docker container images.</p>
+    </div>
+
+    <div class="card">
+        <h3>Ansible</h3>
+        <p>Automated deployment and server configuration.</p>
+    </div>
+
+    <div class="card">
+        <h3>AWS EC2</h3>
+        <p>Application hosting on cloud infrastructure.</p>
+    </div>
+
+</div>
+```
+
+</section>
+
+<section class="section pipeline" id="pipeline">
+
+```
+<h2>CI/CD Pipeline</h2>
+
+<p class="section-intro">
+    Every code change can automatically travel through the
+    complete deployment pipeline.
+</p>
+
+<div class="steps">
+
+    <div class="step">
+        <div class="step-number">01</div>
+        <h3>Git Push</h3>
+        <p>Developer pushes code to GitHub.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">02</div>
+        <h3>Webhook</h3>
+        <p>GitHub triggers Jenkins automatically.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">03</div>
+        <h3>Build</h3>
+        <p>Jenkins builds the Docker image.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">04</div>
+        <h3>Test</h3>
+        <p>Container is started and tested.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">05</div>
+        <h3>ECR</h3>
+        <p>Image is pushed to Amazon ECR.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">06</div>
+        <h3>Deploy</h3>
+        <p>Ansible deploys the image to EC2.</p>
+    </div>
+
+</div>
+```
+
+</section>
+
+<section class="section architecture" id="architecture">
+
+```
+<h2>AWS Deployment Architecture</h2>
+
+<p class="section-intro">
+    The application is deployed across multiple EC2 instances
+    using a centralized Jenkins CI/CD server.
+</p>
+
+<div class="architecture-box">
+
+    <p>💻 <strong>Developer</strong></p>
+
+    <p>↓</p>
+
+    <p>🐙 <strong>GitHub Repository</strong></p>
+
+    <p>↓ Webhook</p>
+
+    <p>⚙️ <strong>Jenkins CI/CD Server</strong></p>
+
+    <p>↓</p>
+
+    <p>🐳 <strong>Docker Build & Test</strong></p>
+
+    <p>↓</p>
+
+    <p>📦 <strong>Amazon ECR</strong></p>
+
+    <p>↓</p>
+
+    <p>🔧 <strong>Ansible</strong></p>
+
+    <p>↓</p>
+
+    <p>☁️ <strong>EC2 Application Servers</strong></p>
+
+    <span class="status">● Deployment Pipeline Active</span>
+
+</div>
+```
+
+</section>
+
+<footer>
+    <p>
+        <strong>CloudOps CI/CD Project</strong>
+        — Built with AWS, Docker, Jenkins and Ansible
+    </p>
+</footer>
+
+</body>
+</html>
+
