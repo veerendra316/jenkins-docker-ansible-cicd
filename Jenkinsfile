@@ -15,10 +15,21 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Docker Test') {
             steps {
-                sh 'docker image inspect jenkins-cicd-web:${BUILD_NUMBER}'
+                sh '''
+                    docker rm -f jenkins-cicd-test || true
+                    docker run -d --name jenkins-cicd-test -p 8081:80 jenkins-cicd-web:${BUILD_NUMBER}
+                    sleep 5
+                    curl -f http://localhost:8081
+                '''
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker rm -f jenkins-cicd-test || true'
         }
     }
 }
