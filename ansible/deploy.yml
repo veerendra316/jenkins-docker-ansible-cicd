@@ -1,0 +1,56 @@
+---
+- name: Deploy Website from ECR
+  hosts: webservers
+  become: yes
+
+  vars:
+    aws_region: us-east-1
+    ecr_registry: "592011499817.dkr.ecr.us-east-1.amazonaws.com"
+    image_name: "jenkins-cicd-web"
+    image_tag: "latest"
+    full_image: "{{ ecr_registry }}/{{ image_name }}:{{ image_tag }}"
+
+  tasks:
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install Docker and AWS CLI
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - awscli
+        state: present
+
+    - name: Start Docker
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Login to Amazon ECR
+      ansible.builtin.shell:
+        cmd: >
+          aws ecr get-login-password --region {{ aws_region }}
+          | docker login --username AWS --password-stdin {{ ecr_registry }}
+      changed_when: false
+
+    - name: Pull latest website image
+      ansible.builtin.command:
+        cmd: docker pull {{ full_image }}
+
+    - name: Remove old website container
+      ansible.builtin.command:
+        cmd: docker rm -f jenkins-cicd-web
+      failed_when: false
+
+    - name: Start website container
+      ansible.builtin.command:
+        cmd: >
+          docker run -d
+          --name jenkins-cicd-web
+          --restart unless-stopped
+          -p 80:80
+          {{ full_image }}
